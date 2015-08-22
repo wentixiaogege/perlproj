@@ -10,7 +10,7 @@ set rda_Input(ui_areaiolib) {}
 set rda_Input(ui_blklib) {}
 set rda_Input(ui_kboxlib) {}
 set rda_Input(ui_gds_file) {}
-set rda_Input(ui_timelib,min) "/home/encounter/timing/fast/*fast*.lib"
+set rda_Input(ui_timelib,min) "/home/*fast*.lib"
 set rda_Input(ui_timelib) {}
 set rda_Input(ui_timelib,max) "/home/encounter/timing/slow/*slow*.lib"
 set rda_Input(ui_timelib) {}
@@ -65,10 +65,10 @@ set rda_Input(ui_xilm_file) {}
 set rda_Input(ui_qxtech_file) {}
 set rda_Input(ui_qxlib_file) {}
 set rda_Input(ui_qxconf_file) {}
-set rda_Input(ui_pwrnet) "VDD1 VDD2 VDD3"
+set rda_Input(ui_pwrnet) "vdd1 Vdd2 Vdd3"
 set rda_Input(ui_gndnet) {VSS}
 set rda_Input(flip_first) {1}
 set rda_Input(double_back) {1}
 set rda_Input(assign_buffer) {0}
-set rda_Input(ui_pg_connections) "GND"
+set rda_Input(ui_pg_connections) "gnd"
 set rda_Input(ui_gen_footprint) {1}

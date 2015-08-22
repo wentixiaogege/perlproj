@@ -8,7 +8,7 @@ my $filename = 'dtmf.conf';
 open(my $fh, '<:encoding(UTF-8)', $filename)
   or die "Could not open file '$filename' $!";
 
-print "************************original file**************************\n";
+print "\n************************Please input your configuraion ! **************************\n";
 
 my %file_hash =();
 my @file_keys=();
@@ -22,7 +22,7 @@ my $index = 0;
 while (my $row = <$fh>) {
     chomp $row;
 
-    print "$row\n";
+    # print "$row\n";
 
     if($row =~ m/\((.+?)\)\s+?([\{|"].*?[\}|"])/){
         # print "$1 $2"."\n"
@@ -32,78 +32,118 @@ while (my $row = <$fh>) {
     }
 }
 
-print "\n************************test hash table**************************\n";
+# print "\n************************test hash table**************************\n";
 
-# $file_hash{"ui_netlist"} = '/home/encounter/logic/Verilog/DTMF.v'.'/home/encounter/logic/stubs.v';
-# test file_hash
-for my $k (keys %file_hash) {
-    print "$k $file_hash{$k}\n";
-}
+# # $file_hash{"ui_netlist"} = '/home/encounter/logic/Verilog/DTMF.v'.'/home/encounter/logic/stubs.v';
+# # test file_hash
+# for my $k (keys %file_hash) {
+#     print "$k $file_hash{$k}\n";
+# }
 
-print "\n************************test hash table keys**************************\n";
-for(my $for_loop=0;$for_loop<$index;$for_loop++) {
-       print $for_loop . "----->" . @file_keys[$for_loop]."\n";
-} 
+# print "\n************************test hash table keys**************************\n";
+# for(my $for_loop=0;$for_loop<$index;$for_loop++) {
+#        print $for_loop . "----->" . @file_keys[$for_loop]."\n";
+# } 
 
 # getting user input
 
-print "Please input  Verilog netlists \n";
-$user_input = <>;
-# User needs to type in the full paths for the below 2 verilog files:
-# /home/encounter/logic/Verilog/DTMF.v
-# /home/encounter/logic/stubs.v
-print $user_input;
+print "1. Please input  Verilog netlists [/home/encounter/logic/Verilog/DTMF.v /home/encounter/logic/stubs.v]:\n";
+my $user_input = input_d('/home/encounter/logic/Verilog/DTMF.v /home/encounter/logic/stubs.v');
+print 'change <ui_netlist> to '. $user_input . "\n\n";
 # ui_netlist
-$file_hash{"ui_netlist"} = $user_input;
-
-print "Please input  Fast corner timing library \n";
-$user_input = <>;
-print $user_input;
-# User needs to type in the following path:
-# /home/encounter/timing/fast/*fast*.lib
-# ui_timelib,min
-$file_hash{"ui_timelib,min"} = $user_input;
+$file_hash{"ui_netlist"} = '"' . $user_input. '"';
 
 
-print "Please input  Slow corner timing library \n";
-$user_input = <>;
+print "2. Please input  Fast corner timing library [/home/encounter/timing/fast/*fast*.lib]: \n";
+$user_input = input_d('/home/encounter/timing/fast/*fast*.lib');
+print 'change <ui_timelib,min> to '. $user_input . "\n\n";
+$file_hash{"ui_timelib,min"} = '"' . $user_input. '"';
+
+
+print "3. Please input  Slow corner timing library [/home/encounter/timing/slow/*slow*.lib]: \n";
+# $user_input = <STDIN>;
 # User needs to type in the following path:
 # /home/encounter/timing/slow/*slow*.lib
 # ui_timelib,max
-$file_hash{"ui_timelib,max"} = $user_input;
+$user_input = input_d('/home/encounter/timing/slow/*slow*.lib');
+print 'change <ui_timelib,max> to '. $user_input . "\n\n";
+$file_hash{"ui_timelib,max"} = '"' . $user_input. '"';
 
-print "Please input  IO file \n";
-$user_input = <>;
+print "4. Please input  IO file [/home/encounter/TSMC90/DTMF/dtmf.io]: \n";
 # User needs to type in the following path:
 # /home/encounter/TSMC90/DTMF/dtmf.io
 # ui_io_file
-$file_hash{"ui_io_file"} = $user_input;
+$user_input = input_d('/home/encounter/TSMC90/DTMF/dtmf.io');
+print 'change <ui_io_file> to '. $user_input . "\n\n";
+$file_hash{"ui_io_file"} = '"' . $user_input. '"';
 
-print "Please input  dtmf constraint file \n";
-$user_input = <>;
+print "5. Please input  dtmf constraint file [/home/encounter/TSMC90/DTMF/dtmf.sdc]: \n";
+# $user_input = <STDIN>;
 # User needs to type in the following path:
 # /home/encounter/TSMC90/DTMF/dtmf.sdc
 # ui_timingcon_file
-$file_hash{"ui_timingcon_file"} = $user_input;
+$user_input = input_d('/home/encounter/TSMC90/DTMF/dtmf.sdc');
+print 'change <ui_timingcon_file> to '. $user_input . "\n\n";
+$file_hash{"ui_timingcon_file"} = '"' . $user_input. '"';
 
-print "Please input  lef file \n";
-$user_input = <>;
+print "6. Please input  lef file [/home/encounter/TSMC90/physical/lef/all.lef /home/encounter/TSMC90/DTMF/physical/lef/mem.lef]: \n";
 # User needs to type in the following 2 paths:
 # /home/encounter/TSMC90/physical/lef/all.lef
 # /home/encounter/TSMC90/DTMF/physical/lef/mem.lef
 # ui_leffile
-$file_hash{"ui_leffile"} = $user_input;
+$user_input = input_d('/home/encounter/TSMC90/physical/lef/all.lef /home/encounter/TSMC90/DTMF/physical/lef/mem.lef');
+print 'change <ui_leffile> to '. $user_input . "\n\n";
+$file_hash{"ui_leffile"} = '"' . $user_input. '"';
 
-print "Please input  Power names \n";
-$user_input = <>;
+print "7. Please input  Power names [VDD1 VDD2 VDD3]: \n";
 # User needs to type in the following data:
 # VDD1 VDD2 VDD3
 # ui_pwrnet
-$file_hash{"ui_pwrnet"} = $user_input;
+$user_input = input_d('VDD1 VDD2 VDD3');
+print 'change <ui_pwrnet> to '. $user_input . "\n\n";
+$file_hash{"ui_pwrnet"} = '"' . $user_input. '"';
 
-print "Please input  Ground name \n";
-$user_input = <>;
+print "8. Please input  Ground name [GND]: \n";
 # User needs to type in the following data:
 # GND
 # ui_pg_connections
-$file_hash{"ui_pg_connections"} = $user_input;
+$user_input = input_d('GND');
+print 'change <ui_pg_connections> to '. $user_input . "\n\n";
+$file_hash{"ui_pg_connections"} = '"' . $user_input. '"';
+
+print "************************Your configuraion end! **************************\n";
+
+# print "\n************************test hash table**************************\n";
+# $file_hash{"ui_netlist"} = '/home/encounter/logic/Verilog/DTMF.v'.'/home/encounter/logic/stubs.v';
+# test file_hash
+# for my $k (keys %file_hash) {
+#     print "$k $file_hash{$k}\n";
+# }
+
+# write file
+my $out_filename = 'report.md';
+open(my $fh2, '>', $out_filename) or die "Could not open file '$out_filename ' $!";
+
+for(my $for_loop=0; $for_loop<$index; $for_loop++) {
+    my $key = $file_keys[$for_loop];
+    print $fh2 'set rda_Input(' . $key .') '. $file_hash{$key} . "\n";
+} 
+
+# print $fh2 "My first report generated by perl2\n";
+close $fh2;
+print "Please check the final file ".$out_filename."\n";
+
+########## sub declarations come here
+ 
+sub input_d {
+    my ($text) = @_;
+    # print $text;
+
+    my $input = <STDIN>;
+    chomp $input;
+    if (!$input) {
+       # body...
+       $input = $text;
+    }
+    return $input;
+}
